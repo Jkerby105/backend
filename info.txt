@@ -1,0 +1,115 @@
+(1) --
+
+To get a list of volunteers, opportunities,emergency contact
+
+                                                         /emergency
+                                                        /volunteers
+    const response = await fetch('http://localhost:3001/opportunities', {
+      headers: {
+        'Content-Type': 'application/json', 
+      },
+    });
+    
+      const data =  await response.json();
+
+=> You will get an array of objects or an object that contain an error message
+                                      ,for the error you could redirect to to a page, display the error
+
+error
+{message: 'an error has happen....'}
+
+
+
+{object will include this}
+VolunteerID
+....
+
+or
+
+OpportunitiesID
+....
+
+or
+
+EContactID
+....
+- - - - - - - - - - - - - - - - - - - - -
+
+(2) -- To post a specific volunteers, opportunities, emergency contact
+
+- I need to know if Im editing a current instance and if yes, then I need the ID or creating a new instance
+
+const vol = {                 const opp = {             const emergency = { 
+  Email: ...,                    Title: ...,              Email: ...,
+  Fname: ...,                    Description: ...,        Fname: ...,
+  Lname: ...,                    edit: true or false,     Lname: ...,
+  Username: ...,                 id: 23 or null           Address_Street: ...,
+  Password: ...,                 }                        Address_State: ...,
+  Approval_Status: ...,                                   Address_ZipCode: ...,
+  Address_Street: ...,                                    Phone: ...,
+  Address_State: ...,                                     edit: true or false,
+  Address_ZipCode: ...,                                   id: 23 or null
+  Education_Degree: ...,                                   }
+  Skills: ...,
+  Phone: ...,
+  Location: ...,
+  Licenses: ...,
+  Time: ...,
+
+  edit: true or false,
+  id : 23 or null
+}
+                                                         /emergency
+                                                        /opportunities
+    const response = await fetch(`http://localhost:3001/voulnteer`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', 
+      },
+      body: JSON.stringify(vol)
+    });
+
+
+
+
+
+
+- - - - - - - - - - - - - - - - - - - - -
+
+(3) --
+
+To delete a specific volunteers, opportunities,emergency contact
+
+                                                         /emergency/
+                                                        /opportunities/
+    const response = await fetch(`http://localhost:3001/voulnteer/${tempid}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json', 
+      }
+    });
+
+
+- if theres an error you will receive an object
+{error: 'could not delete ... '}
+- - - - - - - - - - - - - - - - - - - - -
+
+(4) -- 
+
+To Edit a specific  volunteers, opportunities,emergency contact
+
+                                                          /emergency/edit/
+                                                        /opportunities/edit/    
+    const response = await fetch(`http://localhost:3001/voulnteer/edit/${tempid}`, {
+      headers: {
+        'Content-Type': 'application/json', 
+      }
+    });
+
+
+- If successful you will receive an object contain the information for that specific id if unsuccessful you
+                                                                will receive an object contin an error
+
+{error: 'There was an error'}
+
+
