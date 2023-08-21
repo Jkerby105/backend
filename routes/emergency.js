@@ -34,7 +34,6 @@ router.get("/:id", (req, res, next) => {
 
 router.post("/Edit", (req, res, next) => {
   const data = req.body;
-  console.log(data);
 
   const emergencyID = data.ID;
   const emergencyName = data.EmergencyFirstName;

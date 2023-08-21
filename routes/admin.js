@@ -179,10 +179,8 @@ router.post("/Edit", (req, res, next) => {
 
 router.delete("/:id", (req, res, next) => {
   const sql = "DELETE FROM VOULNTEER WHERE VolunteerID = ?;";
-  console.log(req.params);
 
   const ID = req.params.id;
-  console.log(ID);
   db.query(sql, [ID])
     .then((response) => res.json(response))
     .catch((err) => {
