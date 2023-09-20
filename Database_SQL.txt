@@ -1,0 +1,123 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema mydb5
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb5
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb5` DEFAULT CHARACTER SET utf8mb3 ;
+USE `mydb5` ;
+
+-- -----------------------------------------------------
+-- Table `mydb5`.`ADMIN`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb5`.`ADMIN` (
+  `AdminID` INT NOT NULL AUTO_INCREMENT,
+  `Username` VARCHAR(60) NOT NULL,
+  `Password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`AdminID`),
+  UNIQUE INDEX `Password_UNIQUE` (`Password` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 8
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb5`.`VOULNTEER`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb5`.`VOULNTEER` (
+  `VolunteerID` INT NOT NULL AUTO_INCREMENT,
+  `Email` VARCHAR(100) NOT NULL,
+  `Fname` VARCHAR(100) NOT NULL,
+  `Lname` VARCHAR(100) NOT NULL,
+  `Username` VARCHAR(100) NOT NULL,
+  `Password` VARCHAR(100) NOT NULL,
+  `Approval_Status` VARCHAR(100) NOT NULL,
+  `Address` VARCHAR(1000) NOT NULL,
+  `Education_Degree` VARCHAR(1000) NULL DEFAULT NULL,
+  `Skills_Interests` LONGTEXT NULL DEFAULT NULL,
+  `Phone_Number` VARCHAR(12) NOT NULL,
+  `Preferred_Locations` VARCHAR(1000) NOT NULL,
+  `Licenses` VARCHAR(1000) NULL DEFAULT NULL,
+  `Availability_times` VARCHAR(1000) NULL DEFAULT NULL,
+  PRIMARY KEY (`VolunteerID`),
+  UNIQUE INDEX `Password_UNIQUE` (`Password` ASC) VISIBLE,
+  UNIQUE INDEX `VolunteerID_UNIQUE` (`VolunteerID` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 52
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb5`.`EMERGENCY_CONTACT_INFORMATION`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb5`.`EMERGENCY_CONTACT_INFORMATION` (
+  `EContactID` INT NOT NULL AUTO_INCREMENT,
+  `Email` VARCHAR(100) NOT NULL,
+  `Fname` VARCHAR(100) NOT NULL,
+  `Lname` VARCHAR(100) NOT NULL,
+  `Address` VARCHAR(1000) NOT NULL,
+  `Phone_Number` VARCHAR(100) NOT NULL,
+  `VOULNTEER_VolunteerID` INT NOT NULL,
+  PRIMARY KEY (`EContactID`, `VOULNTEER_VolunteerID`),
+  INDEX `fk_EMERGENCY_CONTACT_INFORMATION_VOULNTEER1_idx` (`VOULNTEER_VolunteerID` ASC) VISIBLE,
+  CONSTRAINT `fk_EMERGENCY_CONTACT_INFORMATION_VOULNTEER1`
+    FOREIGN KEY (`VOULNTEER_VolunteerID`)
+    REFERENCES `mydb5`.`VOULNTEER` (`VolunteerID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 1001
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb5`.`OPPORTUNITIES`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb5`.`OPPORTUNITIES` (
+  `OpportunitiesID` INT NOT NULL AUTO_INCREMENT,
+  `Title` VARCHAR(100) NOT NULL,
+  `Description` LONGTEXT NOT NULL,
+  PRIMARY KEY (`OpportunitiesID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 46
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb5`.`OPPORTUNITIES_has_VOULNTEER`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb5`.`OPPORTUNITIES_has_VOULNTEER` (
+  `OPPORTUNITIES_OpportunitiesID` INT NOT NULL,
+  `VOULNTEER_VolunteerID` INT NOT NULL,
+  `OPPORTUNITIES_has_VOULNTEER_ID` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`OPPORTUNITIES_has_VOULNTEER_ID`),
+  INDEX `fk_OPPORTUNITIES_has_VOULNTEER_OPPORTUNITIES1_idx` (`OPPORTUNITIES_OpportunitiesID` ASC) VISIBLE,
+  INDEX `fk_OPPORTUNITIES_has_VOULNTEER_VOULNTEER1` (`VOULNTEER_VolunteerID` ASC) VISIBLE,
+  CONSTRAINT `fk_OPPORTUNITIES_has_VOULNTEER_OPPORTUNITIES1`
+    FOREIGN KEY (`OPPORTUNITIES_OpportunitiesID`)
+    REFERENCES `mydb5`.`OPPORTUNITIES` (`OpportunitiesID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_OPPORTUNITIES_has_VOULNTEER_VOULNTEER1`
+    FOREIGN KEY (`VOULNTEER_VolunteerID`)
+    REFERENCES `mydb5`.`VOULNTEER` (`VolunteerID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -36,6 +36,7 @@ router.get("", (req, res, next) => {
 
 router.get("/:id", (req, res, next) => {
   const id = req.params.id;
+  console.log(id);
 
   const sql = "SELECT * FROM VOULNTEER WHERE VolunteerID = ?;";
   db.query(sql, [id])
@@ -127,6 +128,7 @@ router.post("/create", (req, res, next) => {
 });
 
 router.post("/Edit", (req, res, next) => {
+  console.log("here");
   const data = req.body;
 
   const volunteerIdToUpdate = data.ID;
